@@ -40,6 +40,7 @@ class Stop implements CommandInterface
             if (!\swoole_process::kill($pid, 0)) {
                 return "PID :{$pid} not exist ";
             }
+            \Swoole\Timer::clearAll(); //清理定时器 兼容swoole4.4.4严格模式stop
             if ($force) {
                 \swoole_process::kill($pid, SIGKILL);
             } else {
